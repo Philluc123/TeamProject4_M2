@@ -1,0 +1,6 @@
+# SignalBrief M2 prototype - Python 3.11+
+openai-agents>=0.2      # agent loop, MCP client, tracing
+openai                  # OpenAI-compatible client pointed at NRP
+mcp[cli]>=1.9,<2.0.0    # FastMCP server (1.x - 2.0 moved FastMCP, same pin as course repo)
+python-dotenv           # loads NRP_API_KEY from .env
+# News/PubMed/MusicBrainz calls use only the Python standard library (no extra deps, no API keys).

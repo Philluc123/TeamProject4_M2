@@ -1,0 +1,6 @@
+{"release-groups": [
+  {"id": "aaaa-1111", "title": "Brand New Single", "primary-type": "Single", "secondary-types": [], "first-release-date": "2026-09-20"},
+  {"id": "bbbb-2222", "title": "Old Album", "primary-type": "Album", "secondary-types": [], "first-release-date": "2024-11-22"},
+  {"id": "cccc-3333", "title": "Year Only", "primary-type": "EP", "secondary-types": [], "first-release-date": "2026"},
+  {"id": "dddd-4444", "title": "Live Set", "primary-type": "Album", "secondary-types": ["Live"], "first-release-date": "2026-09-10"}
+]}

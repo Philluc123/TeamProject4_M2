@@ -1,0 +1,26 @@
+{
+  "reader": "Paul",
+  "topics": [
+    {
+      "name": "New VST plugins",
+      "kind": "news",
+      "query": "new VST plugin release",
+      "days": 3,
+      "why": "Music producer; wants to know when notable synths/effects launch or update."
+    },
+    {
+      "name": "Kendrick Lamar",
+      "kind": "artist",
+      "query": "Kendrick Lamar",
+      "days": 30,
+      "why": "Favorite artist - new albums, singles, and features."
+    },
+    {
+      "name": "Cancer research breakthroughs",
+      "kind": "research",
+      "query": "cancer immunotherapy clinical trial",
+      "days": 7,
+      "why": "Personal interest in progress on cancer treatment."
+    }
+  ]
+}

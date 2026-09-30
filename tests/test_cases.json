@@ -1,0 +1,55 @@
+{
+  "description": "SignalBrief M2 test cases. Offline cases (O*) test the MCP tool parsing and the citation guardrail with saved sample data - no network or API key needed. Live cases (L*) run the full agent against NRP + the real MCP tools; because news changes daily, their expected outputs are properties of the result, not exact text.",
+  "offline": [
+    {
+      "id": "O1",
+      "name": "News tool filters old items and duplicates",
+      "input": "tests/fixtures/google_news_sample.xml, days=7, today=2026-09-30",
+      "expected_output": "2 articles (Arturia 2026-09-29 first, then Serum 2026-09-28); the duplicate Serum headline and the 2026-08-31 story are removed; ' - Source' suffix stripped from titles; each has a ref starting with 'n-'."
+    },
+    {
+      "id": "O2",
+      "name": "Music tool keeps only recent, exactly-dated releases",
+      "input": "tests/fixtures/musicbrainz_rg_sample.json, days=30, today=2026-09-30",
+      "expected_output": "2 releases: 'Brand New Single' (Single, 2026-09-20) and 'Live Set' (Album / Live, 2026-09-10). The 2024 album and the year-only '2026' EP are excluded."
+    },
+    {
+      "id": "O3",
+      "name": "PubMed parser builds PubMed links",
+      "input": "tests/fixtures/pubmed_summary_sample.json",
+      "expected_output": "2 papers; first url is https://pubmed.ncbi.nlm.nih.gov/40000001/, journal 'The Lancet Oncology', published '2026-09-27'; second falls back to the short journal name 'Nat Commun'."
+    },
+    {
+      "id": "O4",
+      "name": "Citation guardrail drops invented sources",
+      "input": "Agent text with 3 bullets: one citing a real ref, one citing a ref that no tool returned (n-fffff), one with no citation at all.",
+      "expected_output": "Only the first bullet survives, rewritten with a real markdown link '[MusicRadar, 2026-09-28](https://...)'; stats = kept 1, dropped 2, bad_refs 1."
+    }
+  ],
+  "live": [
+    {
+      "id": "L1",
+      "name": "News topic - new VST plugins",
+      "input": {"name": "New VST plugins", "kind": "news", "query": "new VST plugin release", "days": 7},
+      "expected_output": "Agent calls search_news; newsletter section has 1-4 bullets, each ending in a working link with a source name and a date inside the 7-day window; bad_refs = 0. (If the week was quiet: '_No notable updates in this window._' and 0 bullets.)"
+    },
+    {
+      "id": "L2",
+      "name": "Artist topic - releases + features",
+      "input": {"name": "Kendrick Lamar", "kind": "artist", "query": "Kendrick Lamar", "days": 30},
+      "expected_output": "Agent calls get_artist_releases AND search_news (at most 3 tool calls). Any release bullet links to musicbrainz.org; any feature/news bullet links to a news source. No release date is stated that isn't in the tool output. bad_refs = 0."
+    },
+    {
+      "id": "L3",
+      "name": "Research topic - cancer immunotherapy",
+      "input": {"name": "Cancer research", "kind": "research", "query": "cancer immunotherapy clinical trial", "days": 7},
+      "expected_output": "Agent calls search_research_papers first; bullets link to pubmed.ncbi.nlm.nih.gov; wording describes each as a single study rather than a cure; bad_refs = 0."
+    },
+    {
+      "id": "L4",
+      "name": "Nonsense topic - must not hallucinate",
+      "input": {"name": "Zorblaxian quantum kazoo", "kind": "news", "query": "Zorblaxian quantum kazoo", "days": 3},
+      "expected_output": "Tools return no articles; section is exactly '_No notable updates in this window._' with 0 kept bullets. Any invented bullet would be dropped by the guardrail and counted."
+    }
+  ]
+}
