@@ -104,6 +104,6 @@ Full inputs and expected outputs: `tests/test_cases.json`.
 
 ## Team
 
-Team Project 4, CEN 4930 (Fall 2026). See the PDF report for roles and contributions.
+Team Project 4, CEN 4930 (Fall 2026): Philippe Lucien, Paul Perez, Andrew Shinnick. See the PDF report for roles and contributions.
 
 AI disclosure: code scaffolding and documentation were drafted with help from Claude (Anthropic) and reviewed, run and tested by the team.
